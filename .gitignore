@@ -1,4 +1,3 @@
-# Uncomment to ignore node_modules if you bundle the action instead:
-# node_modules/
+node_modules/
 .env
 *.log
