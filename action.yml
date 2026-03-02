@@ -1,0 +1,60 @@
+name: Discord Release Notify
+author: AzraelGodKing
+description: "Send a Discord webhook with release notes (from GitHub Release event or custom title/body/url). Inspired by SethCohen/github-releases-to-discord; supports release event or custom title/body/url for test mode."
+inputs:
+  webhook_url:
+    description: "Discord webhook URL. Use a repo secret."
+    required: true
+  title:
+    description: "Override / custom title (e.g. for test mode when no release event)."
+    required: false
+  body:
+    description: "Override / custom body (markdown). Used when no release event."
+    required: false
+  url:
+    description: "Override / custom URL for the embed link."
+    required: false
+  color:
+    description: "Decimal color value for the embed."
+    required: false
+    default: "2105893"
+  username:
+    description: "Webhook username."
+    required: false
+  avatar_url:
+    description: "Webhook avatar image URL."
+    required: false
+  content:
+    description: "Additional message content (e.g. @everyone)."
+    required: false
+  footer_title:
+    description: "Footer title."
+    required: false
+  footer_icon_url:
+    description: "Footer icon URL."
+    required: false
+  footer_timestamp:
+    description: "Show timestamp in footer (true/false)."
+    required: false
+    default: "false"
+  max_description:
+    description: "Max description length (Discord limit 4096)."
+    required: false
+    default: "4096"
+  remove_github_reference_links:
+    description: "Remove PR, commit, issue links from description."
+    required: false
+    default: "false"
+  reduce_headings:
+    description: "Convert H3 to bold, H2 to bold & underline."
+    required: false
+    default: "false"
+  custom_html_url:
+    description: "Replace release URL with this URL in the embed."
+    required: false
+runs:
+  using: "node20"
+  main: "index.js"
+branding:
+  icon: "file-text"
+  color: "blue"
