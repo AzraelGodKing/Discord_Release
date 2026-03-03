@@ -52,6 +52,9 @@ inputs:
   custom_html_url:
     description: "Replace release URL with this URL in the embed."
     required: false
+  thumbnail_url:
+    description: "URL for embed thumbnail (e.g. mod icon)."
+    required: false
 runs:
   using: "node20"
   main: "index.js"

@@ -1,6 +1,13 @@
-# Installs dependencies and commits node_modules. Run manually when you change package.json or index.js.
+# Installs dependencies and commits node_modules. Runs on push (when action files change) or manually.
 name: Prepare action
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'index.js'
+      - 'action.yml'
   workflow_dispatch:
 jobs:
   prepare:

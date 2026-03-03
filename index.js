@@ -142,6 +142,8 @@ function buildEmbedMessage(name, htmlUrl, description) {
   if (core.getInput('footer_timestamp') === 'true') {
     embedMsg.timestamp = new Date().toISOString();
   }
+  const thumbnailUrl = core.getInput('thumbnail_url');
+  if (thumbnailUrl) embedMsg.thumbnail = { url: thumbnailUrl };
   return embedMsg;
 }
 
