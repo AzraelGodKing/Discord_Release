@@ -1,6 +1,6 @@
 # New action: Discord release notify (inspired by SethCohen)
 
-Plan for a **new GitHub Action from scratch**, inspired by [SethCohen/github-releases-to-discord](https://github.com/SethCohen/github-releases-to-discord), with clear attribution to the original. The action lives in **this repo (DiscordBot)** and will support both **real GitHub Release events** and **optional inputs** (title, body, url) so it can be used in test mode without publishing a release.
+Plan for a **new GitHub Action from scratch**, inspired by [SethCohen/github-releases-to-discord](https://github.com/SethCohen/github-releases-to-discord), with clear attribution to the original. The action lives in **this repo (Discord_Release)** and will support both **real GitHub Release events** and **optional inputs** (title, body, url) so it can be used in test mode without publishing a release.
 
 ---
 
@@ -13,21 +13,21 @@ Plan for a **new GitHub Action from scratch**, inspired by [SethCohen/github-rel
 
 ---
 
-## 2. Where the action lives: DiscordBot repo
+## 2. Where the action lives: Discord_Release repo
 
-The action lives in **this repository (DiscordBot)**. So that other repos (e.g. SunhavenMod) can use it with `uses: Owner/DiscordBot@v1`, the action must be at the **root** of the repo (GitHub expects `action.yml` at the root when you reference a repo as an action).
+The action lives in **this repository (Discord_Release)**. So that other repos (e.g. SunhavenMod) can use it with `uses: Owner/Discord_Release@v1`, the action must be at the **root** of the repo (GitHub expects `action.yml` at the root when you reference a repo as an action).
 
 - **Action files at repo root:** `action.yml`, `index.js`, `package.json`, and a `README.md` that describes the action. Optionally `LICENSE`.
 - **Future bot code:** When you add the Discord bot (slash commands, polling, etc.), put it in a subfolder (e.g. `bot/` or `src/`) so the root stays the action entry point.
 
-Usage from SunhavenMod: `uses: AzraelGodKing/DiscordBot@main` (or `@v1` after you tag a release). No path suffix; the whole DiscordBot repo is the action.
+Usage from SunhavenMod: `uses: AzraelGodKing/Discord_Release@main` (or `@v1` after you tag a release). No path suffix; the whole Discord_Release repo is the action.
 
 ---
 
-## 3. Repo structure (DiscordBot)
+## 3. Repo structure (Discord_Release)
 
 ```
-DiscordBot/
+Discord_Release/
 ├── action.yml
 ├── index.js
 ├── package.json
@@ -43,7 +43,7 @@ DiscordBot/
 Later, for the bot itself:
 
 ```
-DiscordBot/
+Discord_Release/
 ├── action.yml               # action stays at root
 ├── index.js
 ├── package.json
@@ -99,24 +99,24 @@ Keep the code self-contained in one file (or a small number of files) so the act
 
 ---
 
-## 7. README.md (at DiscordBot root)
+## 7. README.md (at Discord_Release root)
 
 - Short description and feature list (release event + optional title/body/url for tests).
 - **Attribution:** "Inspired by [SethCohen/github-releases-to-discord](https://github.com/SethCohen/github-releases-to-discord)."
 - Usage: (1) On `release: published` with no extra inputs. (2) On `workflow_dispatch` (or any event) with `title`, `body`, and optionally `url` for test/fake notifications.
 - Inputs table (webhook_url required; title, body, url optional; rest same as original).
-- Example workflow snippets for both real release and test mode, using this repo: `uses: Owner/DiscordBot@main`.
+- Example workflow snippets for both real release and test mode, using this repo: `uses: Owner/Discord_Release@main`.
 - License (e.g. MIT).
 
 ---
 
 ## 8. Integration with SunhavenMod (build-release-publish.yml)
 
-SunhavenMod's workflow references the action in the **DiscordBot** repo:
+SunhavenMod's workflow references the action in the **Discord_Release** repo:
 
 - **Real release:** `notify_discord` job (on `release: published`) uses:
   ```yaml
-  uses: AzraelGodKing/DiscordBot@main
+  uses: AzraelGodKing/Discord_Release@main
   with:
     webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
     color: "2105893"
@@ -127,24 +127,24 @@ SunhavenMod's workflow references the action in the **DiscordBot** repo:
 
 - **Test mode:** "Post test notification to Discord" step uses the same repo with inputs:
   ```yaml
-  uses: AzraelGodKing/DiscordBot@main
+  uses: AzraelGodKing/Discord_Release@main
   with:
     webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
     title: "Test – Discord notification"
     body: "Fake release run. No GitHub Release or Thunderstore. Webhook OK."
   ```
 
-Replace `AzraelGodKing` with your GitHub org/user and `@main` with `@v1` (or another ref) when you tag the DiscordBot repo.
+Replace `AzraelGodKing` with your GitHub org/user and `@main` with `@v1` (or another ref) when you tag the Discord_Release repo.
 
 ---
 
 ## 9. Order of work
 
-1. In **DiscordBot**, add at repo root: `action.yml`, `package.json`, `README.md` (with attribution), and optionally `LICENSE`, `.gitignore`.
+1. In **Discord_Release**, add at repo root: `action.yml`, `package.json`, `README.md` (with attribution), and optionally `LICENSE`, `.gitignore`.
 2. Implement `index.js`: context resolution (release vs inputs), formatting helpers (from original, with attribution comment), embed build, webhook send.
-3. Run `npm install` in DiscordBot root; commit `node_modules` (or document that maintainers run `npm install` before committing) so the action runs when another repo uses it.
-4. Push DiscordBot and (if needed) create a tag (e.g. `v1`) for stable reference from SunhavenMod.
-5. In **SunhavenMod**, update INTEGRATE-DISCORD-RELEASES.md to reference `Owner/DiscordBot@main` (or `@v1`) and the test-mode step.
-6. In **SunhavenMod**, update build-release-publish.yml: add `release` trigger, `notify_discord` job, test mode, and use `uses: Owner/DiscordBot@main` in both real-release and test-release steps.
+3. Run `npm install` in Discord_Release root; commit `node_modules` (or document that maintainers run `npm install` before committing) so the action runs when another repo uses it.
+4. Push Discord_Release and (if needed) create a tag (e.g. `v1`) for stable reference from SunhavenMod.
+5. In **SunhavenMod**, update INTEGRATE-DISCORD-RELEASES.md to reference `Owner/Discord_Release@main` (or `@v1`) and the test-mode step.
+6. In **SunhavenMod**, update build-release-publish.yml: add `release` trigger, `notify_discord` job, test mode, and use `uses: Owner/Discord_Release@main` in both real-release and test-release steps.
 
-This gives you a single action in the DiscordBot repo with clear attribution, usable from SunhavenMod (or any other repo) for both real releases and test Discord notifications.
+This gives you a single action in the Discord_Release repo with clear attribution, usable from SunhavenMod (or any other repo) for both real releases and test Discord notifications.

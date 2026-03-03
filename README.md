@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Discord Release Notify
-        uses: AzraelGodKing/DiscordBot@main
+        uses: AzraelGodKing/Discord_Release@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           username: "Sun Haven Mods"
@@ -42,14 +42,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test Discord notification
-        uses: AzraelGodKing/DiscordBot@main
+        uses: AzraelGodKing/Discord_Release@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           title: "Test – Discord notification"
           body: "Fake release run. Webhook OK."
 ```
 
-Replace `AzraelGodKing/DiscordBot@main` with your repo (e.g. `owner/DiscordBot@v1`).
+Replace `AzraelGodKing/Discord_Release@main` with your repo (e.g. `owner/DiscordBot@v1`).
 
 **Setup for this repo:** Run the "Prepare action" workflow (Actions → Prepare action → Run workflow). It installs dependencies and commits `node_modules` so the action runs without a local build.
 
