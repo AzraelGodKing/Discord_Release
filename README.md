@@ -51,7 +51,7 @@ jobs:
 
 Replace `AzraelGodKing/DiscordBot@main` with your repo (e.g. `owner/DiscordBot@v1`).
 
-**Setup for this repo:** Run `npm install` and `npm run build` in the repo root, then commit the `dist/` folder. The action uses the bundled output, so no `node_modules` is needed at runtime.
+**Setup for this repo:** Run the "Prepare action" workflow (Actions → Prepare action → Run workflow). It installs dependencies and commits `node_modules` so the action runs without a local build.
 
 ## Inputs
 
